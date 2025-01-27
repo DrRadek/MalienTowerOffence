@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgxla3r1k33pv"]
+
+[ext_resource type="Script" path="res://Code/Entities/Base.cs" id="1_pidvk"]
+[ext_resource type="PackedScene" uid="uid://6gg7mky8mani" path="res://Scenes/Entities/PlayerHealthBar.tscn" id="2_80uqp"]
+[ext_resource type="Texture2D" uid="uid://dhm1iv3mjnaxf" path="res://Textures/Base.png" id="3_0ekfa"]
+[ext_resource type="Script" path="res://Code/MouseDetector.cs" id="3_1ofoc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1m6lg"]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uj4d4"]
+radius = 110.0
+
+[node name="Base" type="StaticBody2D" node_paths=PackedStringArray("mouseDetector")]
+script = ExtResource("1_pidvk")
+healthBarScene = ExtResource("2_80uqp")
+mouseDetector = NodePath("TakeHitArea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -5)
+shape = SubResource("CircleShape2D_1m6lg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_0ekfa")
+
+[node name="TakeHitArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_1ofoc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TakeHitArea"]
+position = Vector2(-1, -3)
+shape = SubResource("CircleShape2D_uj4d4")

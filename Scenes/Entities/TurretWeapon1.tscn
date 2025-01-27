@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://chfat8dy5tokr"]
+
+[ext_resource type="Script" path="res://Code/Entities/Weapon.cs" id="1_36v21"]
+[ext_resource type="PackedScene" uid="uid://durr5yi4320bp" path="res://Scenes/Entities/Bullet.tscn" id="2_ki8ap"]
+[ext_resource type="Texture2D" uid="uid://def6u37of8hjd" path="res://Textures/turret1.png" id="3_18mc0"]
+
+[node name="WeaponRotation" type="Node2D" node_paths=PackedStringArray("storageNode")]
+script = ExtResource("1_36v21")
+storageNode = NodePath("Sprite2D")
+ammoInstance = ExtResource("2_ki8ap")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(43, 0)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_18mc0")

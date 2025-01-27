@@ -1,0 +1,117 @@
+[gd_scene load_steps=10 format=3 uid="uid://dq8856ohbpdv"]
+
+[ext_resource type="Texture2D" uid="uid://b3ws6j2b75t2q" path="res://Textures/moon.png" id="1_jy325"]
+[ext_resource type="Script" path="res://Code/Map/MapArea.cs" id="1_k4gnp"]
+[ext_resource type="PackedScene" uid="uid://50db634gwap1" path="res://Scenes/Entities/spawner.tscn" id="1_lr467"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cumse"]
+size = Vector2(1500, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5v632"]
+size = Vector2(1500, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_py48h"]
+size = Vector2(20, 1500)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ntxng"]
+size = Vector2(20, 1500)
+
+[sub_resource type="Gradient" id="Gradient_tnmky"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1q2x1"]
+gradient = SubResource("Gradient_tnmky")
+width = 100
+height = 100
+
+[node name="Map" type="Node2D"]
+
+[node name="BasicArea" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="BasicArea"]
+position = Vector2(1500, 0)
+scale = Vector2(10, 10)
+texture = ExtResource("1_jy325")
+
+[node name="END_DOWN" type="StaticBody2D" parent="BasicArea"]
+visible = false
+position = Vector2(750, 750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicArea/END_DOWN"]
+shape = SubResource("RectangleShape2D_cumse")
+
+[node name="Sprite2D" type="Sprite2D" parent="BasicArea/END_DOWN"]
+texture = SubResource("PlaceholderTexture2D_5v632")
+
+[node name="END_UP" type="StaticBody2D" parent="BasicArea"]
+visible = false
+position = Vector2(750, -750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicArea/END_UP"]
+shape = SubResource("RectangleShape2D_cumse")
+
+[node name="Sprite2D" type="Sprite2D" parent="BasicArea/END_UP"]
+texture = SubResource("PlaceholderTexture2D_5v632")
+
+[node name="END_LEFT" type="StaticBody2D" parent="BasicArea"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicArea/END_LEFT"]
+shape = SubResource("RectangleShape2D_py48h")
+
+[node name="Sprite2D" type="Sprite2D" parent="BasicArea/END_LEFT"]
+texture = SubResource("PlaceholderTexture2D_ntxng")
+
+[node name="SpawnArea" type="Node2D" parent="."]
+position = Vector2(1500, 0)
+script = ExtResource("1_k4gnp")
+
+[node name="END_DOWN" type="StaticBody2D" parent="SpawnArea"]
+visible = false
+position = Vector2(750, 750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea/END_DOWN"]
+shape = SubResource("RectangleShape2D_cumse")
+
+[node name="Sprite2D" type="Sprite2D" parent="SpawnArea/END_DOWN"]
+texture = SubResource("PlaceholderTexture2D_5v632")
+
+[node name="END_UP" type="StaticBody2D" parent="SpawnArea"]
+visible = false
+position = Vector2(750, -750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea/END_UP"]
+shape = SubResource("RectangleShape2D_cumse")
+
+[node name="Sprite2D" type="Sprite2D" parent="SpawnArea/END_UP"]
+texture = SubResource("PlaceholderTexture2D_5v632")
+
+[node name="END_RIGHT" type="StaticBody2D" parent="SpawnArea"]
+visible = false
+position = Vector2(1500, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea/END_RIGHT"]
+shape = SubResource("RectangleShape2D_py48h")
+
+[node name="Sprite2D" type="Sprite2D" parent="SpawnArea/END_RIGHT"]
+texture = SubResource("PlaceholderTexture2D_ntxng")
+
+[node name="Sprite2D" type="Sprite2D" parent="SpawnArea"]
+visible = false
+position = Vector2(750, 0)
+scale = Vector2(15, 15)
+texture = SubResource("GradientTexture2D_1q2x1")
+
+[node name="Spawner2" parent="SpawnArea" instance=ExtResource("1_lr467")]
+position = Vector2(576, 170)
+maxHealth = 500
+
+[node name="Spawner" parent="SpawnArea" instance=ExtResource("1_lr467")]
+position = Vector2(300, -353)
+
+[node name="Spawner3" parent="SpawnArea" instance=ExtResource("1_lr467")]
+position = Vector2(980, 491)
+maxHealth = 1000
+
+[node name="Spawner4" parent="SpawnArea" instance=ExtResource("1_lr467")]
+position = Vector2(1230, -199)
+maxHealth = 2000

@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bg2ra058l0eh"]
+
+[ext_resource type="Script" path="res://Code/HealthBar/HealthBar.cs" id="1_pc681"]
+
+[sub_resource type="Gradient" id="Gradient_rnkyd"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0.796078, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tbww7"]
+gradient = SubResource("Gradient_rnkyd")
+width = 96
+height = 15
+
+[node name="HealthBar" type="Node2D"]
+script = ExtResource("1_pc681")
+
+[node name="HealthIndicator" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HealthIndicator"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -8.0
+offset_right = 48.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_progress = SubResource("GradientTexture2D_tbww7")

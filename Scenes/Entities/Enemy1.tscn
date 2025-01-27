@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://rskcgmrtk77p"]
+
+[ext_resource type="Script" path="res://Code/Entities/Enemy.cs" id="1_0hkwn"]
+[ext_resource type="PackedScene" uid="uid://b1n4j8d8pwu1e" path="res://Scenes/Entities/alien_stuff.tscn" id="2_6uuh3"]
+[ext_resource type="PackedScene" uid="uid://bg2ra058l0eh" path="res://Scenes/Entities/EnemyHealthBar.tscn" id="3_kbvq8"]
+[ext_resource type="Texture2D" uid="uid://drco6o2joxtv" path="res://Textures/alien.png" id="4_hut77"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtdgy"]
+size = Vector2(50, 50)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ma76v"]
+radius = 25.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f8klb"]
+radius = 40.0
+
+[node name="Enemy1" type="RigidBody2D" node_paths=PackedStringArray("enemyFinder")]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_0hkwn")
+alienStuffScene = ExtResource("2_6uuh3")
+enemyFinder = NodePath("HitStuffArea")
+healthBarScene = ExtResource("3_kbvq8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mtdgy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_hut77")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ma76v")
+
+[node name="HitStuffArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitStuffArea"]
+shape = SubResource("CircleShape2D_f8klb")

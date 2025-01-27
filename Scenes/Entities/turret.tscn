@@ -1,0 +1,84 @@
+[gd_scene load_steps=15 format=3 uid="uid://dkxfslhm8vfqs"]
+
+[ext_resource type="Script" path="res://Scenes/Entities/Turret.cs" id="1_d1lpb"]
+[ext_resource type="PackedScene" uid="uid://6gg7mky8mani" path="res://Scenes/Entities/PlayerHealthBar.tscn" id="2_31clv"]
+[ext_resource type="Texture2D" uid="uid://br4xpudl2oe2n" path="res://Textures/turretBase.png" id="3_cqj81"]
+[ext_resource type="PackedScene" uid="uid://chfat8dy5tokr" path="res://Scenes/Entities/TurretWeapon1.tscn" id="3_whfww"]
+[ext_resource type="Script" path="res://Code/MouseDetector.cs" id="4_kqx7q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_awqva"]
+size = Vector2(100, 100)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_prm0y"]
+radius = 700.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofheg"]
+size = Vector2(110, 110)
+
+[sub_resource type="Gradient" id="Gradient_of4vf"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w13nq"]
+gradient = SubResource("Gradient_of4vf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j0um4"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0, 0.0617037, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_2ek0a"]
+material = SubResource("StandardMaterial3D_j0um4")
+radius = 700.0
+height = 1400.0
+radial_segments = 4
+rings = 10
+
+[sub_resource type="Gradient" id="Gradient_bj2ns"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0, 0, 0.145098)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uderw"]
+gradient = SubResource("Gradient_bj2ns")
+
+[node name="Turret" type="StaticBody2D" node_paths=PackedStringArray("weapon", "enemyFinderRadius", "enemyFilder", "debugSprite", "mouseDetector", "previewRangeMesh")]
+script = ExtResource("1_d1lpb")
+weapon = NodePath("WeaponRotation2")
+enemyFinderRadius = NodePath("Area2D/CollisionShape2D")
+enemyFilder = NodePath("Area2D")
+debugSprite = NodePath("DebugSprite")
+mouseDetector = NodePath("TakeHitArea")
+previewRangeMesh = NodePath("MeshInstance2D")
+healthBarScene = ExtResource("2_31clv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_awqva")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_cqj81")
+
+[node name="WeaponRotation2" parent="." instance=ExtResource("3_whfww")]
+bulletSize = 1.0
+cooldown = 0.6
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_prm0y")
+
+[node name="TakeHitArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_kqx7q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TakeHitArea"]
+shape = SubResource("RectangleShape2D_ofheg")
+
+[node name="DebugSprite" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("GradientTexture2D_w13nq")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("SphereMesh_2ek0a")
+texture = SubResource("GradientTexture2D_uderw")

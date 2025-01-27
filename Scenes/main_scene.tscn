@@ -1,0 +1,558 @@
+[gd_scene load_steps=31 format=3 uid="uid://cn14b1t0usir3"]
+
+[ext_resource type="Script" path="res://Code/Other/GameInput.cs" id="1_4djd7"]
+[ext_resource type="PackedScene" uid="uid://dkxfslhm8vfqs" path="res://Scenes/Entities/turret.tscn" id="2_6xnrn"]
+[ext_resource type="Script" path="res://Code/Other/GameManager.cs" id="2_x148r"]
+[ext_resource type="PackedScene" uid="uid://ba4snx4wt2cym" path="res://Scenes/Entities/Player.tscn" id="3_j1mdh"]
+[ext_resource type="Script" path="res://Code/Global/Inventory.cs" id="3_wmqfv"]
+[ext_resource type="PackedScene" uid="uid://dq8856ohbpdv" path="res://Scenes/Map.tscn" id="4_26sqd"]
+[ext_resource type="Script" path="res://Code/PlayerActions/PlayerActionSwitcher.cs" id="4_bcdv1"]
+[ext_resource type="Script" path="res://Code/Other/UI.cs" id="4_osk4u"]
+[ext_resource type="Script" path="res://Code/PlayerActions/FightAction.cs" id="5_c437l"]
+[ext_resource type="Texture2D" uid="uid://c4ryrgmx1amm0" path="res://Textures/weapon.png" id="6_ea6uj"]
+[ext_resource type="Script" path="res://Code/PlayerActions/RepairAction.cs" id="6_jj1v8"]
+[ext_resource type="Script" path="res://Code/PlayerActions/BuildAction.cs" id="6_mcmpw"]
+[ext_resource type="PackedScene" uid="uid://bgxla3r1k33pv" path="res://Scenes/base.tscn" id="7_712w6"]
+[ext_resource type="Script" path="res://Code/PlayerActions/MoveAction.cs" id="7_r8t2t"]
+[ext_resource type="Script" path="res://Code/PlayerActions/DeleteAction.cs" id="8_2xrm3"]
+[ext_resource type="Texture2D" uid="uid://dhq1v7nk8uy0v" path="res://Textures/wrench.png" id="8_7ub7i"]
+[ext_resource type="Texture2D" uid="uid://btnda1rbg6a03" path="res://Textures/hammer.png" id="8_o7rqp"]
+[ext_resource type="Texture2D" uid="uid://bv3vbnllmmejs" path="res://Textures/destroy.png" id="13_rsqfp"]
+[ext_resource type="Script" path="res://Code/PlayerActions/BuyButton.cs" id="14_efctp"]
+[ext_resource type="Script" path="res://Code/GameStatus.cs" id="14_fwym2"]
+[ext_resource type="Script" path="res://Code/PlayerActions/NormalTurretShopButton.cs" id="14_mr7kf"]
+[ext_resource type="PackedScene" uid="uid://xxkcydbbbn5e" path="res://Scenes/Entities/turret2.tscn" id="16_cdlst"]
+[ext_resource type="PackedScene" uid="uid://b42h2fmp02yil" path="res://Scenes/Entities/turret3.tscn" id="17_vqex0"]
+[ext_resource type="PackedScene" uid="uid://6gg7mky8mani" path="res://Scenes/Entities/PlayerHealthBar.tscn" id="24_ad6rh"]
+[ext_resource type="Texture2D" uid="uid://bkhtyhdpxlgio" path="res://Textures/alien_stuff.png" id="25_31vhh"]
+[ext_resource type="Script" path="res://Scenes/PlayButton.cs" id="26_f1qun"]
+[ext_resource type="Texture2D" uid="uid://doa2v7nnn6p82" path="res://Textures/selected.png" id="26_hftfc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8k42e"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c5unh"]
+size = Vector2(36, 22)
+
+[sub_resource type="Environment" id="Environment_hv5ab"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="Game" type="Node2D" parent="."]
+process_mode = 4
+
+[node name="GameInputRegister" type="Node" parent="Game"]
+script = ExtResource("1_4djd7")
+
+[node name="GameManager" type="Node2D" parent="Game" node_paths=PackedStringArray("storageNode", "mouseArea", "difficultyValueLabel")]
+script = ExtResource("2_x148r")
+storageNode = NodePath("../StorageNode")
+mouseArea = NodePath("../MouseArea")
+difficultyValueLabel = NodePath("../CanvasLayer/UI_LeftRight/DifficultyValue")
+
+[node name="Inventory" type="Node" parent="Game"]
+script = ExtResource("3_wmqfv")
+
+[node name="PlayerActionSwitcher" type="Node2D" parent="Game" node_paths=PackedStringArray("playerActionsScenes", "selectedControls")]
+script = ExtResource("4_bcdv1")
+playerActionsScenes = [NodePath("FightAction"), NodePath("RepairAction"), NodePath("BuildAction"), NodePath("DeleteAction")]
+selectedControls = [NodePath("../CanvasLayer/UI_Down/TextureRect/ShootingSelected2"), NodePath("../CanvasLayer/UI_Down/TextureRect2/RepairingSelected2"), NodePath("../CanvasLayer/UI_Down/TextureRect3/BuildingSelected2"), NodePath("../CanvasLayer/UI_Down/TextureRect4/DestroyingSelected2")]
+
+[node name="FightAction" type="Node" parent="Game/PlayerActionSwitcher" node_paths=PackedStringArray("player")]
+script = ExtResource("5_c437l")
+player = NodePath("../../SpawnArea/Player")
+cursor = ExtResource("6_ea6uj")
+
+[node name="RepairAction" type="Node" parent="Game/PlayerActionSwitcher" node_paths=PackedStringArray("player")]
+script = ExtResource("6_jj1v8")
+player = NodePath("../../SpawnArea/Player")
+cursor = ExtResource("8_7ub7i")
+
+[node name="BuildAction" type="Node2D" parent="Game/PlayerActionSwitcher" node_paths=PackedStringArray("buildMenuUi")]
+script = ExtResource("6_mcmpw")
+buildMenuUi = NodePath("../../CanvasLayer/BuyMenu")
+cursor = ExtResource("8_o7rqp")
+
+[node name="MoveAction" type="Node" parent="Game/PlayerActionSwitcher"]
+script = ExtResource("7_r8t2t")
+
+[node name="DeleteAction" type="Node" parent="Game/PlayerActionSwitcher"]
+script = ExtResource("8_2xrm3")
+cursor = ExtResource("13_rsqfp")
+
+[node name="Map" parent="Game" instance=ExtResource("4_26sqd")]
+position = Vector2(-200, 0)
+
+[node name="MouseArea" type="Area2D" parent="Game"]
+position = Vector2(993, -196)
+collision_layer = 0
+collision_mask = 64
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MouseArea"]
+shape = SubResource("CircleShape2D_8k42e")
+
+[node name="Base" parent="Game" node_paths=PackedStringArray("uiHealthBar") instance=ExtResource("7_712w6")]
+uiHealthBar = NodePath("../CanvasLayer/UI_LeftDown/HealthBar")
+
+[node name="SpawnArea" type="Node2D" parent="Game"]
+position = Vector2(146, 0)
+
+[node name="Player" parent="Game/SpawnArea" instance=ExtResource("3_j1mdh")]
+
+[node name="Node2D" type="Node2D" parent="Game"]
+visible = false
+position = Vector2(54, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Game/Node2D"]
+texture = SubResource("PlaceholderTexture2D_c5unh")
+
+[node name="StorageNode" type="Node2D" parent="Game"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Game"]
+
+[node name="Game Status" type="Label" parent="Game/CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -1.0
+offset_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+horizontal_alignment = 1
+script = ExtResource("14_fwym2")
+metadata/_edit_use_anchors_ = true
+
+[node name="UI_LeftRight" type="Control" parent="Game/CanvasLayer" node_paths=PackedStringArray("player", "coordsInfo", "alienStuffInfo", "baseHealthInfo")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("4_osk4u")
+player = NodePath("../../SpawnArea/Player")
+coordsInfo = NodePath("Coords")
+alienStuffInfo = NodePath("../UI_LeftDown/Alien Stuff")
+baseHealthInfo = NodePath("../UI_LeftDown/Base health")
+metadata/_edit_use_anchors_ = true
+
+[node name="Coords" type="Label" parent="Game/CanvasLayer/UI_LeftRight"]
+layout_mode = 0
+offset_right = 198.0
+offset_bottom = 23.0
+text = "COORDS"
+metadata/_edit_use_anchors_ = true
+
+[node name="Difficulty" type="Label" parent="Game/CanvasLayer/UI_LeftRight"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0354938
+anchor_bottom = 0.0354938
+offset_right = 198.0
+offset_bottom = 23.0
+text = "Difficulty: "
+metadata/_edit_use_anchors_ = true
+
+[node name="DifficultyValue" type="Label" parent="Game/CanvasLayer/UI_LeftRight"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0703125
+anchor_top = 0.0354938
+anchor_right = 0.0703125
+anchor_bottom = 0.0354938
+offset_right = 198.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="BuyMenu" type="Control" parent="Game/CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Game/CanvasLayer/BuyMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -200.0
+offset_right = 350.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.270588, 0.270588, 0.270588, 0.490196)
+
+[node name="ColorRect2" type="ColorRect" parent="Game/CanvasLayer/BuyMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -200.0
+offset_right = 5.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.490196)
+
+[node name="Label" type="Label" parent="Game/CanvasLayer/BuyMenu"]
+layout_mode = 0
+offset_left = -290.0
+offset_top = -170.0
+offset_right = -130.0
+offset_bottom = -147.0
+text = "Choose item to build"
+
+[node name="Turret1" type="Button" parent="Game/CanvasLayer/BuyMenu" node_paths=PackedStringArray("buyButton")]
+layout_mode = 0
+offset_left = -316.0
+offset_top = -126.0
+offset_right = -246.0
+offset_bottom = -95.0
+text = "Turret 1"
+script = ExtResource("14_mr7kf")
+sceneToBuy = ExtResource("2_6xnrn")
+infoText = "The most basic turret, shoots enemies nearby.
+
+Price: $PRICE$
+Stats:
+- Damage: 1
+- Fire Rate: 1.6
+- Range: 700"
+price = 10
+buyButton = NodePath("../Info/Build")
+
+[node name="Turret2" type="Button" parent="Game/CanvasLayer/BuyMenu" node_paths=PackedStringArray("buyButton")]
+layout_mode = 0
+offset_left = -236.0
+offset_top = -126.0
+offset_right = -166.0
+offset_bottom = -95.0
+text = "Turret 2"
+script = ExtResource("14_mr7kf")
+sceneToBuy = ExtResource("16_cdlst")
+infoText = "Advanced turret.
+Shoots faster, deals more damage and has a higher range.
+
+Price: $PRICE$
+Stats:
+- Damage: 2
+- Fire Rate: 2.5
+- Range: 800"
+price = 20
+researchPrice = 40
+buyButton = NodePath("../Info/Build")
+
+[node name="Turret3" type="Button" parent="Game/CanvasLayer/BuyMenu" node_paths=PackedStringArray("buyButton")]
+layout_mode = 0
+offset_left = -156.0
+offset_top = -126.0
+offset_right = -86.0
+offset_bottom = -95.0
+text = "Turret 3"
+script = ExtResource("14_mr7kf")
+sceneToBuy = ExtResource("17_vqex0")
+infoText = "The best turret available.
+
+Price: $PRICE$
+Stats:
+- Damage: 4
+- Fire Rate: 6.6
+- Range: 1000"
+price = 40
+researchPrice = 80
+buyButton = NodePath("../Info/Build")
+
+[node name="Info" type="Control" parent="Game/CanvasLayer/BuyMenu"]
+visible = false
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 60.0
+
+[node name="NameLabel" type="Label" parent="Game/CanvasLayer/BuyMenu/Info"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = -190.0
+offset_right = 200.0
+offset_bottom = -167.0
+text = "Turret 1"
+
+[node name="InfoLabel" type="Label" parent="Game/CanvasLayer/BuyMenu/Info"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = -159.0
+offset_right = 339.0
+offset_bottom = -6.0
+text = "The most basic turret, shoots enemies nearby.
+
+Price: abc
+Stats:
+- wef
+- fwef
+- fwefwe
+"
+autowrap_mode = 3
+
+[node name="Build" type="Button" parent="Game/CanvasLayer/BuyMenu/Info" node_paths=PackedStringArray("infoLabel", "nameLabel", "infoNode", "buildAction")]
+layout_mode = 0
+offset_left = 61.75
+offset_top = 126.345
+offset_right = 261.75
+offset_bottom = 157.345
+text = "Research (Price: 100)"
+script = ExtResource("14_efctp")
+infoLabel = NodePath("../InfoLabel")
+nameLabel = NodePath("../NameLabel")
+infoNode = NodePath("..")
+buildAction = NodePath("../../../../PlayerActionSwitcher/BuildAction")
+
+[node name="UI_LeftDown" type="Control" parent="Game/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthBar" parent="Game/CanvasLayer/UI_LeftDown" instance=ExtResource("24_ad6rh")]
+position = Vector2(70, -18)
+scale = Vector2(1.36, 1.36)
+
+[node name="Alien Stuff" type="Label" parent="Game/CanvasLayer/UI_LeftDown"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = -62.0
+offset_right = 124.0
+offset_bottom = -39.0
+text = "Alien stuff"
+metadata/_edit_use_anchors_ = true
+
+[node name="Base health" type="Label" parent="Game/CanvasLayer/UI_LeftDown"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = -30.0
+offset_right = 233.0
+offset_bottom = -7.0
+text = "Base health"
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Game/CanvasLayer/UI_LeftDown"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -65.0
+offset_right = 37.0
+offset_bottom = -35.0
+texture = ExtResource("25_31vhh")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="UI_Down" type="Control" parent="Game/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="Game/CanvasLayer/UI_Down"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -60.0
+offset_right = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.270588, 0.270588, 0.270588, 0.568627)
+
+[node name="TextureRect" type="TextureRect" parent="Game/CanvasLayer/UI_Down"]
+layout_mode = 2
+offset_left = -100.0
+offset_top = -50.0
+offset_right = -60.0
+offset_bottom = -10.0
+texture = ExtResource("6_ea6uj")
+
+[node name="ShootingSelected2" type="TextureRect" parent="Game/CanvasLayer/UI_Down/TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("26_hftfc")
+
+[node name="ShootingSelected" type="Label" parent="Game/CanvasLayer/UI_Down/TextureRect"]
+layout_mode = 0
+offset_top = -5.0
+offset_right = 40.0
+offset_bottom = 18.0
+text = "1"
+
+[node name="TextureRect2" type="TextureRect" parent="Game/CanvasLayer/UI_Down"]
+layout_mode = 2
+offset_left = -50.0
+offset_top = -50.0
+offset_right = -10.0
+offset_bottom = -10.0
+texture = ExtResource("8_7ub7i")
+
+[node name="RepairingSelected2" type="TextureRect" parent="Game/CanvasLayer/UI_Down/TextureRect2"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("26_hftfc")
+
+[node name="RepairingSelected" type="Label" parent="Game/CanvasLayer/UI_Down/TextureRect2"]
+layout_mode = 0
+offset_top = -5.0
+offset_right = 40.0
+offset_bottom = 18.0
+text = "2
+"
+
+[node name="TextureRect3" type="TextureRect" parent="Game/CanvasLayer/UI_Down"]
+layout_mode = 2
+offset_top = -50.0
+offset_right = 40.0
+offset_bottom = -10.0
+texture = ExtResource("8_o7rqp")
+
+[node name="BuildingSelected2" type="TextureRect" parent="Game/CanvasLayer/UI_Down/TextureRect3"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("26_hftfc")
+
+[node name="BuildingSelected" type="Label" parent="Game/CanvasLayer/UI_Down/TextureRect3"]
+layout_mode = 0
+offset_top = -5.0
+offset_right = 40.0
+offset_bottom = 18.0
+text = "3"
+
+[node name="TextureRect4" type="TextureRect" parent="Game/CanvasLayer/UI_Down"]
+layout_mode = 2
+offset_left = 50.0
+offset_top = -50.0
+offset_right = 90.0
+offset_bottom = -10.0
+texture = ExtResource("13_rsqfp")
+
+[node name="DestroyingSelected2" type="TextureRect" parent="Game/CanvasLayer/UI_Down/TextureRect4"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("26_hftfc")
+
+[node name="DestroyingSelected" type="Label" parent="Game/CanvasLayer/UI_Down/TextureRect4"]
+layout_mode = 0
+offset_top = -5.0
+offset_right = 40.0
+offset_bottom = 18.0
+text = "4"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hv5ab")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MainMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.215
+offset_top = -170.0
+offset_right = 201.785
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.269531, 0.269531, 0.269531, 1)
+
+[node name="Label2" type="Label" parent="CanvasLayer/MainMenu"]
+layout_mode = 0
+offset_left = -55.0
+offset_top = -86.0
+offset_right = 15.0
+offset_bottom = -63.0
+text = "Difficulty"
+
+[node name="SpinBox" type="SpinBox" parent="CanvasLayer/MainMenu/Label2"]
+layout_mode = 0
+offset_left = 79.0
+offset_top = -4.0
+offset_right = 162.063
+offset_bottom = 27.0
+step = 0.1
+value = 1.0
+allow_greater = true
+allow_lesser = true
+
+[node name="Info" type="Label" parent="CanvasLayer/MainMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -70.0
+offset_right = 98.0
+offset_bottom = 213.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Controls:
+WASD = Movement
+LMB = Action
+- Mode Switch:
+   1 = Shooting
+   2 = Repairing
+   3 = Building
+   4 = Destroying buildings
+
+GOAL:
+- Destroy all alien homes."
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/MainMenu" node_paths=PackedStringArray("gameScene", "menuScene", "spinBox")]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -128.0
+offset_right = 49.0
+offset_bottom = -97.0
+text = "PLAY"
+script = ExtResource("26_f1qun")
+gameScene = NodePath("../../../Game")
+menuScene = NodePath("..")
+spinBox = NodePath("../Label2/SpinBox")

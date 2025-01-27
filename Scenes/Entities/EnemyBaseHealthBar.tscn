@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://bq0rb1mjipsiq"]
+
+[ext_resource type="Script" path="res://Code/HealthBar/HealthBar.cs" id="1_17uwu"]
+
+[sub_resource type="Gradient" id="Gradient_f6oe7"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u3fpo"]
+gradient = SubResource("Gradient_f6oe7")
+width = 96
+height = 15
+
+[sub_resource type="Gradient" id="Gradient_egc8k"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.788235, 0.4, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qs2wy"]
+gradient = SubResource("Gradient_egc8k")
+width = 96
+height = 15
+
+[node name="HealthBar" type="Node2D"]
+script = ExtResource("1_17uwu")
+
+[node name="HealthIndicator" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HealthIndicator"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -8.0
+offset_right = 48.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_under = SubResource("GradientTexture2D_u3fpo")
+texture_progress = SubResource("GradientTexture2D_qs2wy")

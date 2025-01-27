@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgw3tk2pr2k6l"]
+
+[ext_resource type="Script" path="res://Code/Entities/Weapon.cs" id="1_k7ric"]
+
+[node name="RepairInstance" type="Node2D"]
+script = ExtResource("1_k7ric")
