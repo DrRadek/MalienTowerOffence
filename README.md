@@ -1,5 +1,5 @@
 # Malien Tower Offence
-- A tower offence game made in Godot in three days (version 1.0.0).
+- A tower offence game made in Godot 4.3 in three days (version 1.0.0).
 - Location: Moon.
 - The longer you play, the stronger enemies are so be quick!
 
