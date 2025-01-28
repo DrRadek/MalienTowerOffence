@@ -54,6 +54,20 @@ public partial class PlayerActionSwitcher : Node
             {
                 SwitchAction(PlayerActions.Delete);
             }
+            else if (@event.IsActionPressed(GameInput.PlayerActionPrevious))
+            {
+                var newAction = (int)activeAction - 1;
+                if (newAction < 0)
+                    newAction = 3;
+                SwitchAction((PlayerActions)newAction);
+            }
+            else if (@event.IsActionPressed(GameInput.PlayerActionNext))
+            {
+                var newAction = (int)activeAction + 1;
+                if (newAction > 3)
+                    newAction = 0;
+                SwitchAction((PlayerActions)newAction);
+            }
         }
     }
 

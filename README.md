@@ -1,5 +1,5 @@
 # Malien Tower Offence
-- A tower offence game made in Godot.
+- A tower offence game made in Godot in three days (version 1.0.0).
 - Location: Moon.
 - The longer you play, the stronger enemies are so be quick!
 
@@ -15,8 +15,16 @@
    - 2 = Repairing
    - 3 = Building
    - 4 = Destroying buildings
+   - Or use scroll wheel
 
 ## itch.io
 - This game was for Lazy Jam - winter 2025
 - Game build can be found there for Windows, Linux and Web
 - link: https://lil-lynx.itch.io/malien-tower-offence
+
+## Changelog
+### 1.0.1
+- Added option to use scroll wheel for mode switching
+
+### 1.0.0
+- Release

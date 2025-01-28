@@ -101,5 +101,21 @@ public partial class GameInput
                 CreatePhysicalInputEventKey(actionName, Key.Key4),
             };
         }, PlayerActionDelete));
+
+        // PlayerActionNext
+        AddAction(CreateActionLambda(actionName =>
+        {
+            return new(){
+                CreateInputEventMouseButton(actionName, MouseButton.WheelDown),
+            };
+        }, PlayerActionNext));
+
+        // PlayerActionPrevious
+        AddAction(CreateActionLambda(actionName =>
+        {
+            return new(){
+                CreateInputEventMouseButton(actionName, MouseButton.WheelUp),
+            };
+        }, PlayerActionPrevious));
     }
 }

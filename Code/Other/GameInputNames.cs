@@ -18,4 +18,6 @@ public partial class GameInput
     public const string PlayerActionBuild = nameof(PlayerActionBuild);
     public const string PlayerActionMove = nameof(PlayerActionMove);
     public const string PlayerActionDelete = nameof(PlayerActionDelete);
+    public const string PlayerActionNext = nameof(PlayerActionNext);
+    public const string PlayerActionPrevious = nameof(PlayerActionPrevious);
 }
